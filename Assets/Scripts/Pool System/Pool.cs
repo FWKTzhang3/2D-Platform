@@ -5,6 +5,9 @@ using UnityEngine;
 public class Pool
 {
      public GameObject Prefab => prefab;          // 获取要生成对象池的预制体
+     public int Size => size;                     // 预设对象池尺寸
+     public int RuntimeSize => queue.Count;       // 游戏运行时的实际尺寸
+
      [SerializeField] private GameObject prefab;  // 要生成对象池的预制体（通过Unity编辑器赋值）
      [SerializeField] private int size = 1;       // 对象池大小（一次性存放的对象数量）
      private Queue<GameObject> queue;             // 对象池队列，用于存放对象的队列
@@ -43,7 +46,7 @@ public class Pool
      private GameObject AvailableObject()
      {
           GameObject availableObject = null;                // 初始化可用对象为null
-          if (queue.Count > 0 && queue.Peek().activeSelf)   // 如果队列中有元素并且队首元素处于激活状态
+          if (queue.Count > 0 && !queue.Peek().activeSelf)   // 如果队列中有元素并且队首元素处于未激活状态
                availableObject = queue.Dequeue();                // 从队列中取出一个对象
           else                                              // 反之（如果队列为空）
                availableObject = Copy();                         // 创建一个新的对象

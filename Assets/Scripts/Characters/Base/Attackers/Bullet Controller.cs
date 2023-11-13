@@ -1,51 +1,43 @@
+using System.Collections;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-     private Rigidbody2D rb;
+     [SerializeField] private Vector2 moveDirection;
+     [SerializeField] private float maxMoveDistance;
+     [SerializeField] private float moveSpeed;
 
-     [SerializeField] private Vector2 initialPosition;
-     [SerializeField] private float maxDistance;
-
-     private void Awake()
-     {
-          rb = GetComponent<Rigidbody2D>();
-     }
+     private Vector2 starPos;
 
      private void Start()
      {
-          initialPosition = transform.position; // 记录子弹初始位置
+          starPos = transform.position;
+          moveDirection = new Vector2 (transform.localScale.x, 0f);
+     }
+
+     private void OnEnable()
+     {
+          StartCoroutine(MoveDirectly());
+     }
+
+     IEnumerator MoveDirectly()
+     {
+          while (gameObject.activeSelf)
+          {
+               transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+               yield return null;
+          }
      }
 
      private void Update()
      {
-          CheckRange(initialPosition, maxDistance);
-     }
-
-     private void FixedUpdate()
-     {
-          SetVelocityX(10);
+          float currentDistance = Vector2.Distance(starPos, transform.position);
+          if (currentDistance >= maxMoveDistance)
+               gameObject.SetActive(false);
      }
 
      private void OnTriggerStay2D(Collider2D collision)
      {
-          Destroy(gameObject);
-     }
-
-     /// <summary>
-     /// 射程检测
-     /// </summary>
-     /// <param name="initialPosition"> 初始位置 </param>
-     /// <param name="maxDistance"> 极限射程 </param>
-     private void CheckRange(Vector2 initialPosition, float maxDistance)
-     {
-          float currentDistance = Vector2.Distance(initialPosition, transform.position);
-          if (currentDistance >= maxDistance)
-               Destroy(gameObject);
-     }
-
-     private void SetVelocityX(float velocityX)
-     {
-          rb.velocity = new Vector2(velocityX, rb.velocity.y);
+          gameObject.SetActive(false);
      }
 }

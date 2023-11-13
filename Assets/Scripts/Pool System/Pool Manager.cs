@@ -16,6 +16,34 @@ public class PoolManager : MonoBehaviour
           Initialize(playerProjectilePools);                     // 在游戏开始时初始化玩家发射物体的对象池数组
      }
 
+     #if UNITY_EDITOR
+     private void OnDestroy()
+     {
+          CheckPoolSize(playerProjectilePools);
+     }
+
+     /// <summary>
+     /// 检查对象池尺寸
+     /// </summary>
+     /// <param name="pools"> 输入要检测的对象池 </param>
+     private void CheckPoolSize(Pool[] pools)
+     {
+          foreach(var pool in pools)
+          {
+               if(pool.RuntimeSize > pool.Size)
+               {
+                    Debug.LogWarning(
+                         string.Format("Pool：{0} 的运行时大小比其初始大小 {2} 大 {1} !",
+                         pool.Prefab.name,
+                         pool.RuntimeSize,
+                         pool.Size
+                         ));
+               }
+          }
+     }
+
+     # endif
+
      /// <summary>
      /// 初始化对象池
      /// </summary>

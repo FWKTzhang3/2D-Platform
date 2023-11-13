@@ -6,6 +6,9 @@ public class AnimationManager : MonoBehaviour
      [Header("震动曲线")]
      public AnimationCurve shakeCurve;
 
+     public Transform panterTrans;
+     public GameObject prefab;
+
      private Coroutine shakeCoroutine;  // 缓存协程
      private float shakeCurveMaxLength; // 极限时间
      private float currentShakeLength;  // 当前时间
@@ -48,5 +51,10 @@ public class AnimationManager : MonoBehaviour
           }
 
           transform.localPosition = new Vector2(0, 0);      // 最后还原坐标
+     }
+
+     public void Fire()
+     {
+          PoolManager.Release(prefab, panterTrans.transform.position, panterTrans.transform.rotation, panterTrans.transform.lossyScale);
      }
 }
