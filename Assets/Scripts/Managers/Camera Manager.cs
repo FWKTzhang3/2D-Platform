@@ -6,18 +6,23 @@ using UnityEngine;
 /// </summary>
 public class CameraManager : MonoBehaviour
 {
-     private CinemachineConfiner2D confiner2D;    // 调用 confiner2D 
-     private Collider2D cameraCollider;           // 缓存 cameraCollider
+     private CinemachineVirtualCamera virtualCamera;
+     private CinemachineConfiner2D confiner2D;          // 调用边界限制器
+     private BoxCollider2D bulletBounde;                // 调用子弹边界
+     [SerializeField] private Collider2D cameraCollider;                 // 缓存相机边界
 
      // 储存获取到的所有相机震源
-     private CinemachineImpulseSource[] cameraImpulseSource;
+     public CinemachineImpulseSource[] cameraImpulseSource;
 
      [Header("相机接收事件")]
      [Tooltip("相机震动事件")] public VoidEventSO cameraShakeEvent;
 
      private void Awake()
      {
+          virtualCamera = GetComponent<CinemachineVirtualCamera>();
           confiner2D = GetComponentInChildren<CinemachineConfiner2D>();
+          bulletBounde = GetComponentInChildren<BoxCollider2D>();
+
           cameraImpulseSource = GetComponentsInChildren<CinemachineImpulseSource>();
      }
 
@@ -34,6 +39,10 @@ public class CameraManager : MonoBehaviour
      private void Start()
      {
           GetNewCameraBounds();
+     }
+
+     private void Update()
+     {
      }
 
      /// <summary>

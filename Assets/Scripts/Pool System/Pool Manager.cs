@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-     [SerializeField] private Pool[] playerProjectilePools;      // 存放玩家发射物体的对象池数组
+     [SerializeField] private Pool[] playerPools;      // 存放玩家发射物体的对象池数组
      static private Dictionary<GameObject, Pool> dictionary;
 
      private void Awake()
@@ -13,13 +13,13 @@ public class PoolManager : MonoBehaviour
 
      private void Start()
      {
-          Initialize(playerProjectilePools);                     // 在游戏开始时初始化玩家发射物体的对象池数组
+          Initialize(playerPools);                     // 在游戏开始时初始化玩家发射物体的对象池数组
      }
 
      #if UNITY_EDITOR
      private void OnDestroy()
      {
-          CheckPoolSize(playerProjectilePools);
+          CheckPoolSize(playerPools);
      }
 
      /// <summary>

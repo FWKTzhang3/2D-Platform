@@ -11,6 +11,8 @@ TagManager:
   - Detectors
   - CameraBounds
   - CameraShake
+  - BulletRange
+  - Bullet
   layers:
   - Default
   - TransparentFX
