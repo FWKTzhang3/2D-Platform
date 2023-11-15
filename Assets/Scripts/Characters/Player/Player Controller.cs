@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
      public float moveSpeed => Mathf.Abs(rigidBody.velocity.x);  // 当前移动速度（取绝对值）
      public int currentLayer => gameObject.layer;                // 当前层级
 
+     public bool isIdle => getRigibodyVelocity == Vector2.zero;  // 玩家释放处于禁止状态
      public bool canAirJump   { get; set; }  // 二段跳
      public bool canAirAttack { get; set; }  // 空中攻击
      public bool isCrossing   { get; set; }  // 穿越状态
