@@ -59,7 +59,7 @@ public class Pool
      /// <summary>
      /// 准备对象方法
      /// </summary>
-     /// <remarks> 不带参数 </remarks>
+     /// <remarks> 不需要任何参数 </remarks>
      /// <returns> 准备好的对象 </returns>
      public GameObject PreparedObject()
      {
@@ -86,15 +86,15 @@ public class Pool
      /// 准备对象方法
      /// </summary>
      /// <param name="position"> 对象初始坐标 </param>
-     /// <param name="rotation"> 对象初始旋转 </param>
-     /// <remarks> 第二次重载 </remarks>
+     /// <param name="localScale"> 对象初始旋转 </param>
+     /// <remarks> 还要再一次输入，初始坐标、初始方向 </remarks>
      /// <returns> 准备好的对象 </returns>
-     public GameObject PreparedObject(Vector2 position, Quaternion rotation)
+     public GameObject PreparedObject(Vector2 position, Vector2 localScale)
      {
           GameObject preparedObject = AvailableObject();    // 获取一个可用对象
           preparedObject.SetActive(true);                   // 激活准备好的对象
           preparedObject.transform.position = position;     // 设置对象的位置为传入的position
-          preparedObject.transform.rotation = rotation;     // 设置对象的旋转为传入的rotation
+          preparedObject.transform.localScale = localScale; // 设置对象的缩放比例为传入的localScale
           return preparedObject;                            // 返回准备好的对象
      }
 
@@ -102,17 +102,17 @@ public class Pool
      /// 准备对象方法
      /// </summary>
      /// <param name="position"> 对象初始坐标 </param>
-     /// <param name="rotation"> 对象初始旋转 </param>
      /// <param name="localScale"> 对象初始方向 </param>
-     /// <remarks> 第三次重载 </remarks>
+     /// <param name="rotation"> 对象初始旋转 </param>
+     /// <remarks> 还要再一次输入，初始坐标、初始方向、初始旋转 </remarks>
      /// <returns> 准备好的对象 </returns>
-     public GameObject PreparedObject(Vector2 position, Quaternion rotation, Vector2 localScale)
+     public GameObject PreparedObject(Vector2 position, Vector2 localScale, Quaternion rotation)
      {
           GameObject preparedObject = AvailableObject();    // 获取一个可用对象
           preparedObject.SetActive(true);                   // 激活准备好的对象
           preparedObject.transform.position = position;     // 设置对象的位置为传入的position
-          preparedObject.transform.rotation = rotation;     // 设置对象的旋转为传入的rotation
           preparedObject.transform.localScale = localScale; // 设置对象的缩放比例为传入的localScale
+          preparedObject.transform.rotation = rotation;     // 设置对象的旋转为传入的rotation
           return preparedObject;                            // 返回准备好的对象
      }
 

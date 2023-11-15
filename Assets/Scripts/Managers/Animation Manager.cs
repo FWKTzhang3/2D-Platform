@@ -55,6 +55,7 @@ public class AnimationManager : MonoBehaviour
 
      public void Fire()
      {
-          PoolManager.Release(prefab, panterTrans.transform.position, panterTrans.transform.rotation, panterTrans.transform.lossyScale);
+          Vector2 position = new Vector2 (panterTrans.transform.position.x, panterTrans.transform.position.y + 1);
+          PoolManager.Release(prefab, position, panterTrans.transform.lossyScale);
      }
 }

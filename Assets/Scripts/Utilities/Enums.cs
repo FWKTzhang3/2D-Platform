@@ -4,17 +4,18 @@
 /// <remarks>用来提前枚举一些字符变量来指代层级数字，这样可以更快的运行</remarks>
 public enum LayerType
 {
-     Default = 0,
-     TransparentFX = 1,
-     IgnoreRaycast = 2,
-     Player = 3,
-     Water = 4,
-     UI = 5,
-     Ground = 6,
-     OneWayPlatform = 7,
-     Cross = 8,
-     Muteki = 9,
-     Enemy = 10,
+     Default,
+     TransparentFX,
+     IgnoreRaycast,
+     Player,
+     Water,
+     UI,
+     Ground,
+     OneWayPlatform,
+     Cross,
+     Muteki,
+     Enemy,
+     Camera,
 }
 
 /// <summary>
@@ -29,6 +30,7 @@ public enum TagType
      Animation,
      Detectors,
      CameraBounds,
+     CameraShake,
 }
 
 /// <summary>

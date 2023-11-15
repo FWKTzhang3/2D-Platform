@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-     [SerializeField] private Pool[] playerPools;      // 存放玩家发射物体的对象池数组
-     static private Dictionary<GameObject, Pool> dictionary;
+     [SerializeField] private Pool[] playerPools;                // 存放玩家发射物体的对象池数组
+     static private Dictionary<GameObject, Pool> dictionary;     // 芝士个静态字典，以物体为键，对象池为值
 
      private void Awake()
      {
-          dictionary = new Dictionary<GameObject, Pool>();
+          dictionary = new Dictionary<GameObject, Pool>();       // 实例化字典
      }
 
      private void Start()
@@ -16,7 +16,8 @@ public class PoolManager : MonoBehaviour
           Initialize(playerPools);                     // 在游戏开始时初始化玩家发射物体的对象池数组
      }
 
-     #if UNITY_EDITOR
+
+     #if UNITY_EDITOR    // 用来编辑器里Debug用的，检测数组够不够用
      private void OnDestroy()
      {
           CheckPoolSize(playerPools);
@@ -53,15 +54,15 @@ public class PoolManager : MonoBehaviour
           foreach (var pool in pools)   // 历遍数组的所有物体
           {
 
-          #if UNITY_EDITOR
+               #if UNITY_EDITOR         // 用来编辑器里Debug用的，检测预制体有没有重复的
                if (dictionary.ContainsKey(pool.Prefab))
                {
                     Debug.LogError("有重复的预制体：" + pool.Prefab);
                     continue;
                }
-          #endif
+               #endif
 
-               dictionary.Add(pool.Prefab, pool);
+               dictionary.Add(pool.Prefab, pool); // 给字典加入新的条目（物体为键，对象池为值）
                // 为每个对象池创建一个父级 Transform，并命名为 "Pool: 预制体名称"
                Transform poolParent = new GameObject("Pool: " + pool.Prefab.name).transform;
                poolParent.parent = transform;     // 将新创建的父级 Transform 设置为当前对象的子对象
@@ -154,7 +155,7 @@ public class PoolManager : MonoBehaviour
      /// <para>Prepared gameObject in the pool</para>
      /// <para>对象池中预备好的游戏对象</para>
      /// </returns>
-     public static GameObject Release(GameObject prefab, Vector2 position, Quaternion rotation)
+     public static GameObject Release(GameObject prefab, Vector2 position, Vector2 localScale)
      {
           #if UNITY_EDITOR
           if (!dictionary.ContainsKey(prefab))
@@ -164,7 +165,7 @@ public class PoolManager : MonoBehaviour
                return null;
           }
           #endif
-          return dictionary[prefab].PreparedObject(position, rotation);
+          return dictionary[prefab].PreparedObject(position, localScale);
      }
 
      /// <summary>
@@ -196,7 +197,7 @@ public class PoolManager : MonoBehaviour
      /// <para>Prepared gameObject in the pool</para>
      /// <para>对象池中预备好的游戏对象</para>
      /// </returns>
-     public static GameObject Release(GameObject prefab, Vector2 position, Quaternion rotation, Vector2 localScale)
+     public static GameObject Release(GameObject prefab, Vector2 position, Vector2 localScale, Quaternion rotation)
      {
           #if UNITY_EDITOR
           if (!dictionary.ContainsKey(prefab))
@@ -206,7 +207,7 @@ public class PoolManager : MonoBehaviour
                return null;
           }
           #endif
-          return dictionary[prefab].PreparedObject(position, rotation, localScale);
+          return dictionary[prefab].PreparedObject(position, localScale, rotation);
      }
 
      #endregion
