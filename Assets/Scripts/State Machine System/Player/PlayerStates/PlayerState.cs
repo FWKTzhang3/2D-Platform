@@ -48,7 +48,7 @@ public class PlayerState : ScriptableObject, IState    // 继承ScriptableObject（
      public void Intialize(Animator animator, PlayerInput input, PlayerController player, PlayerConstants constants, GroundDetector groundDetector, PlayerStateMachine stateMachine)
      {
           this.animator = animator;               // 将传入的动画管理器赋值给 animator 属性
-          this.input = input;                     // 将传入的玩家输入类赋值给 input 属性
+          this.input = input;                     // 将传入的玩家输入类赋值给 playerInput 属性
           this.player = player;                   // 将传入的玩家控制器赋值给 player 属性
           this.constants = constants;             // 将传入的玩家常量赋值给 constants 属性
           this.groundDetector = groundDetector;   // 将传入的玩家检测赋值给 groundDetector 属性

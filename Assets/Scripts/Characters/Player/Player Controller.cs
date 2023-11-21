@@ -9,19 +9,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
      // 调用 
-     Rigidbody2D rigidBody;
-     PlayerInput input;
-     PlayerConstants constants;
-     AnimationManager animationManager;
-     CapsuleCollider2D col;
+     private Rigidbody2D rigidBody;
+     private PlayerInput input;
+     private PlayerConstants constants;
+     private AnimationManager animationManager;
+     private CapsuleCollider2D col;
 
-     Coroutine changeLayerCoroutine;    // 缓存协程
+     private Coroutine changeLayerCoroutine;    // 缓存协程
 
      public int faceDir => (int)transform.lossyScale.x;          // 面朝方向
      public float moveSpeed => Mathf.Abs(rigidBody.velocity.x);  // 当前移动速度（取绝对值）
      public int currentLayer => gameObject.layer;                // 当前层级
 
-     public bool isIdle => getRigibodyVelocity == Vector2.zero;  // 玩家释放处于禁止状态
+     // 状态函数
      public bool canAirJump   { get; set; }  // 二段跳
      public bool canAirAttack { get; set; }  // 空中攻击
      public bool isCrossing   { get; set; }  // 穿越状态
@@ -29,13 +29,14 @@ public class PlayerController : MonoBehaviour
      public bool isDeath      { get; set; }  // 死亡
      public bool isHitEnemy   { get; set; }  // 
 
+     
      public int knockbackDirX           { get; set; }  // 受击方向X
      public int knockbackDirY           { get; set; }  // 受击方向Y
      public float knockbackForceX       { get; set; }  // 击退力度X
      public float knockbackForceY       { get; set; }  // 击退力度Y
      public float knockbackHardTime     { get; set; }  // 击退硬直时间
 
-     void Awake()
+     private void Awake()
      {
           // 获取
           rigidBody = GetComponent<Rigidbody2D>();
@@ -45,10 +46,10 @@ public class PlayerController : MonoBehaviour
           animationManager = GetComponentInChildren<AnimationManager>();
      }
 
-     void Start()
+     private void Start()
      {
           input.EnableGameplayInputs();
-          //input.SetMouseState(CursorLockMode.Locked);
+          //playerInput.SetMouseState(CursorLockMode.Locked);
           InitialState();
      }
 
@@ -72,10 +73,10 @@ public class PlayerController : MonoBehaviour
           if (input.move)     // 如果玩家按下了移动按钮 
           {
                int faceDir = (input.axesX > 0) ? 1 : -1;         // 数值精确化（只有1和-1）
-               transform.localScale = new Vector2(faceDir, 1f);  // 将玩家的转换缩放比例设置为 input.axisX 控制的方向（1 为正方向，-1 为反方向）
+               transform.localScale = new Vector2(faceDir, 1f);  // 将玩家的转换缩放比例设置为 playerInput.axisX 控制的方向（1 为正方向，-1 为反方向）
           }
 
-          SetVelocityX(speed * input.axesX); // 调用 SetVelocityX 方法设置玩家的水平速度，速度值为 speed 乘以 input.axisX 的值（也就是根据玩家输入的方向和速度来计算速度值）
+          SetVelocityX(speed * input.axesX); // 调用 SetVelocityX 方法设置玩家的水平速度，速度值为 speed 乘以 playerInput.axisX 的值（也就是根据玩家输入的方向和速度来计算速度值）
      }
 
      /// <summary>

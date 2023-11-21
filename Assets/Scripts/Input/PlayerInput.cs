@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// 玩家控制器脚本
@@ -17,6 +16,10 @@ public class PlayerInput : MonoBehaviour
      public Vector2 axes => playerInputActions.Gameplay.Axes.ReadValue<Vector2>();   //axes属性：这是一个Vector2类型的属性，用于存储玩家的输入轴值。
      public float axesX => axes.x;                                                   //axesX方法：返回axes属性的x分量。
      public float axesY => axes.y;                                                   // axesY方法: 返回axes属性的y分量。
+     #endregion
+
+     #region 摇杆状态
+     public bool isStickOffseting => axes != Vector2.zero;
      #endregion
 
      #region 移动
