@@ -1,3 +1,5 @@
+using System.Numerics;
+
 /// <summary>
 /// 芝士层级枚举
 /// </summary>
@@ -37,7 +39,7 @@ public enum TagType
 /// 芝士角色枚举
 /// </summary>
 /// <remarks> 先这样留着吧，我也不知道有什么用 </remarks>
-public enum CharacterTyper
+public enum CharacterType
 {
      Player,
      Enemy,
@@ -62,3 +64,64 @@ public enum AttackType
      Charge,         // 冲刺攻击
      Finisher        // 结束攻击
 }
+
+#region 控制器枚举
+
+/// <summary>
+/// 摇杆方向
+/// </summary>
+public enum JoystickDirectionType
+{
+     Up,
+     Down,
+     Left,
+     Right,
+     UpLeft,
+     UpRight,
+     DownLeft,
+     DownRight,
+     None,
+}
+
+/// <summary>
+/// 行为按键类型
+/// </summary>
+public enum ActionButtonType
+{
+     ButtonNorth,
+     ButtonSouth,
+     ButtonWest,
+     ButtonEast,
+}
+
+/// <summary>
+/// 十字键类型
+/// </summary>
+public enum DirectionPadType
+{
+     Up,
+     Down,
+     Left,
+     Right,
+}
+
+/// <summary>
+/// 肩部按键类型
+/// </summary>
+public enum ShoulderButtonType
+{
+     LeftButton,    // 左肩键
+     RightButton,   // 右肩键
+}
+
+/// <summary>
+/// 扳机按键类型
+/// </summary>
+public enum TriggerButtonType
+{
+     LeftTrigger,   // 左扳机
+     RightTrigger,  // 右扳机
+}
+
+
+#endregion

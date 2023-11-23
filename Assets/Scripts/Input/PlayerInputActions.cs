@@ -55,36 +55,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Slide"",
-                    ""type"": ""Button"",
-                    ""id"": ""9962c988-88ee-40fe-bcbd-1ef2a5a81be0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""feae3961-e6c8-44d7-b362-015f0ec0e39a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Henshin"",
-                    ""type"": ""Button"",
-                    ""id"": ""82ea8088-101b-4105-997c-99bedb65a577"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Skill"",
                     ""type"": ""Button"",
                     ""id"": ""940a71a9-8903-4214-918f-aa3b440701bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""7457b736-6298-4ead-8ead-c8aba10dc418"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MapToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8b9134f-d180-4740-abe4-5234876e5e56"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -248,45 +239,67 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0f0c5783-9ac6-4652-b21f-97620cf5bae9"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Slide"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4e8dcf04-dffd-47f1-bcd1-2a8f980305c0"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c26f9c4d-ddcc-4f9a-ad4b-a057d01b510b"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Henshin"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f2906ccd-06a6-4760-a682-e03ae56a6316"",
                     ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keybord"",
                     ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1650930d-9760-49e7-bdd4-835cbceefbda"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9beb0cf3-0b7f-46c6-9cf2-d4690e25ed6f"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MenuToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb8f5ebc-c1de-4d26-b74e-81144fe1d1d1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord"",
+                    ""action"": ""MenuToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae142922-98d5-4d10-ab66-cdd819e17681"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MapToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f68ffd1-3fa2-4311-ad17-ebb6cde33c73"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord"",
+                    ""action"": ""MapToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -613,10 +626,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Axes = m_Gameplay.FindAction("Axes", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
-        m_Gameplay_Slide = m_Gameplay.FindAction("Slide", throwIfNotFound: true);
-        m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
-        m_Gameplay_Henshin = m_Gameplay.FindAction("Henshin", throwIfNotFound: true);
         m_Gameplay_Skill = m_Gameplay.FindAction("Skill", throwIfNotFound: true);
+        m_Gameplay_MenuToggle = m_Gameplay.FindAction("MenuToggle", throwIfNotFound: true);
+        m_Gameplay_MapToggle = m_Gameplay.FindAction("MapToggle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -693,10 +705,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Axes;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Attack;
-    private readonly InputAction m_Gameplay_Slide;
-    private readonly InputAction m_Gameplay_Dash;
-    private readonly InputAction m_Gameplay_Henshin;
     private readonly InputAction m_Gameplay_Skill;
+    private readonly InputAction m_Gameplay_MenuToggle;
+    private readonly InputAction m_Gameplay_MapToggle;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -704,10 +715,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Axes => m_Wrapper.m_Gameplay_Axes;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
-        public InputAction @Slide => m_Wrapper.m_Gameplay_Slide;
-        public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
-        public InputAction @Henshin => m_Wrapper.m_Gameplay_Henshin;
         public InputAction @Skill => m_Wrapper.m_Gameplay_Skill;
+        public InputAction @MenuToggle => m_Wrapper.m_Gameplay_MenuToggle;
+        public InputAction @MapToggle => m_Wrapper.m_Gameplay_MapToggle;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -726,18 +736,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @Slide.started += instance.OnSlide;
-            @Slide.performed += instance.OnSlide;
-            @Slide.canceled += instance.OnSlide;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
-            @Henshin.started += instance.OnHenshin;
-            @Henshin.performed += instance.OnHenshin;
-            @Henshin.canceled += instance.OnHenshin;
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
+            @MenuToggle.started += instance.OnMenuToggle;
+            @MenuToggle.performed += instance.OnMenuToggle;
+            @MenuToggle.canceled += instance.OnMenuToggle;
+            @MapToggle.started += instance.OnMapToggle;
+            @MapToggle.performed += instance.OnMapToggle;
+            @MapToggle.canceled += instance.OnMapToggle;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -751,18 +758,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @Slide.started -= instance.OnSlide;
-            @Slide.performed -= instance.OnSlide;
-            @Slide.canceled -= instance.OnSlide;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
-            @Henshin.started -= instance.OnHenshin;
-            @Henshin.performed -= instance.OnHenshin;
-            @Henshin.canceled -= instance.OnHenshin;
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
+            @MenuToggle.started -= instance.OnMenuToggle;
+            @MenuToggle.performed -= instance.OnMenuToggle;
+            @MenuToggle.canceled -= instance.OnMenuToggle;
+            @MapToggle.started -= instance.OnMapToggle;
+            @MapToggle.performed -= instance.OnMapToggle;
+            @MapToggle.canceled -= instance.OnMapToggle;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -921,10 +925,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnAxes(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
-        void OnSlide(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
-        void OnHenshin(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
+        void OnMenuToggle(InputAction.CallbackContext context);
+        void OnMapToggle(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

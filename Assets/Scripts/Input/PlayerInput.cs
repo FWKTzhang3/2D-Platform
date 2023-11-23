@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using DataStructures;
 
 /// <summary>
 /// 玩家控制器脚本
@@ -8,10 +9,12 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
      // 调用
-     PlayerInputActions playerInputActions;
+     private PlayerInputActions playerInputActions;    // 控制器
+     private InputCommandHandler inputCommandHandler;  // 指令转换
+     private LimitedDeque<object> inputCommandBuffer;  // 指令队列
 
      private Coroutine inputBufferCoroutine;
-
+     private JoystickDirectionType lastCommand; 
      #region 控制器方向
      public Vector2 axes => playerInputActions.Gameplay.Axes.ReadValue<Vector2>();   //axes属性：这是一个Vector2类型的属性，用于存储玩家的输入轴值。
      public float axesX => axes.x;                                                   //axesX方法：返回axes属性的x分量。
@@ -42,10 +45,31 @@ public class PlayerInput : MonoBehaviour
      public bool skill => playerInputActions.Gameplay.Skill.WasPerformedThisFrame();      // 检测是否在当前帧按下 Skill
      #endregion
 
+     #region  其他功能
+     public bool swithcMap => playerInputActions.Gameplay.MapToggle.WasPerformedThisFrame();   // 切换出地图
+     public bool swithcMenu => playerInputActions.Gameplay.MenuToggle.WasPerformedThisFrame(); // 切换出菜单
+     #endregion
+
+     public int maxControllerBuffer;
+     public float nullCommandTime;
+     public float currentNullCommandTime;
+
      private void Awake()
      {
-          // 实例
           playerInputActions = new PlayerInputActions();
+          inputCommandHandler = new InputCommandHandler();
+          inputCommandBuffer = new LimitedDeque<object>(maxControllerBuffer);
+     }
+
+     private void Update()
+     {
+          var currentCommand = inputCommandHandler.GetInputDirectionType(axes);
+
+          if (currentCommand != lastCommand)
+          {
+               lastCommand = currentCommand;
+               inputCommandBuffer.AddFirst(currentCommand);
+          }
      }
 
      /// <summary>
@@ -66,6 +90,7 @@ public class PlayerInput : MonoBehaviour
 
      #region 指令预输入系统
      // 你也不希望你的指令接收很反人类吧
+     // TODO:会改成指令队列，预留给搓招玩法，具体要不要实现搓招，等后面
      /// <summary>
      /// 预输入系统
      /// </summary>
@@ -113,4 +138,19 @@ public class PlayerInput : MonoBehaviour
      public void CallbackAttackInputBuffer(bool inputBufferBool) => hasAttackInputBuffer = inputBufferBool;
 
      #endregion
+
+
+#if UNITY_EDITOR
+     void OnGUI()
+     {
+          GUI.skin.label.fontSize = 80;
+          // 遍历队列中的元素，并使用GUILayout.Label()方法绘制出元素名称
+          foreach (object item in inputCommandBuffer)
+          {
+               string elementString = item != null ? item.ToString() : "null";
+               GUILayout.Label(elementString);
+          }
+     }
+#endif
+
 }
