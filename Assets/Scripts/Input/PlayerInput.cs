@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using DataStructures;
 
 /// <summary>
@@ -11,10 +11,8 @@ public class PlayerInput : MonoBehaviour
      // 调用
      private PlayerInputActions playerInputActions;    // 控制器
      private InputCommandHandler inputCommandHandler;  // 指令转换
-     private LimitedDeque<object> inputCommandBuffer;  // 指令队列
+     private LimitedDeque<string> inputCommandBuffer;  // 指令队列
 
-     private Coroutine inputBufferCoroutine;
-     private JoystickDirectionType lastCommand; 
      #region 控制器方向
      public Vector2 axes => playerInputActions.Gameplay.Axes.ReadValue<Vector2>();   //axes属性：这是一个Vector2类型的属性，用于存储玩家的输入轴值。
      public float axesX => axes.x;                                                   //axesX方法：返回axes属性的x分量。
@@ -34,42 +32,54 @@ public class PlayerInput : MonoBehaviour
      public bool jump => playerInputActions.Gameplay.Jump.WasPressedThisFrame();          // 检测是否在当前帧按下 Jump
      public bool stopJump => playerInputActions.Gameplay.Jump.WasReleasedThisFrame();     // 检测是否在当前帧抬起 Jump
      public bool holdJump => playerInputActions.Gameplay.Jump.ReadValue<float>() == 1;    // 检测是否按住 Jump
-     public bool hasJumpInputBuffer;                                                      // 预输入指令（攻击）
-     public float hasJumpInputBufferTime;                                                // 预输入指令持续时间（攻击）
      #endregion
 
      #region 攻击
      public bool attack => playerInputActions.Gameplay.Attack.WasPerformedThisFrame();    // 检测是否在当前帧按下 Attack
-     public bool hasAttackInputBuffer;                                                    // 预输入指令（攻击）
-     public float hasAttackInputBufferTime;                                              // 预输入指令持续时间（攻击）
      public bool skill => playerInputActions.Gameplay.Skill.WasPerformedThisFrame();      // 检测是否在当前帧按下 Skill
      #endregion
 
      #region  其他功能
+     public bool interact => playerInputActions.Gameplay.Interact.WasPerformedThisFrame();     // 是否按下交互
      public bool swithcMap => playerInputActions.Gameplay.MapToggle.WasPerformedThisFrame();   // 切换出地图
      public bool swithcMenu => playerInputActions.Gameplay.MenuToggle.WasPerformedThisFrame(); // 切换出菜单
      #endregion
 
-     public int maxControllerBuffer;
-     public float nullCommandTime;
-     public float currentNullCommandTime;
+     [Header("指令缓冲区设置")]
+     [SerializeField, Tooltip("缓冲区容量")] private int maxControllerBuffer;
+     [SerializeField, Tooltip("空输入倒计时")] private float nullCommandTime;
+     private float currentNullCommandTime;   // 当前空指令时间
 
      private void Awake()
      {
           playerInputActions = new PlayerInputActions();
           inputCommandHandler = new InputCommandHandler();
-          inputCommandBuffer = new LimitedDeque<object>(maxControllerBuffer);
+          inputCommandBuffer = new LimitedDeque<string>(maxControllerBuffer);
+     }
+
+     private void OnEnable()
+     {
+          playerInputActions.Gameplay.Axes.performed += OnAxesPerformed;
+
+          playerInputActions.Gameplay.Attack.started += OnActionstarted;
+          playerInputActions.Gameplay.Jump.started += OnActionstarted;
+          playerInputActions.Gameplay.Skill.started += OnActionstarted;
+          playerInputActions.Gameplay.Interact.started += OnActionstarted;
+     }
+
+     private void OnDisable()
+     {
+          playerInputActions.Gameplay.Axes.performed -= OnAxesPerformed;
+
+          playerInputActions.Gameplay.Attack.started -= OnActionstarted;
+          playerInputActions.Gameplay.Jump.started -= OnActionstarted;
+          playerInputActions.Gameplay.Skill.started -= OnActionstarted;
+          playerInputActions.Gameplay.Interact.started -= OnActionstarted;
      }
 
      private void Update()
      {
-          var currentCommand = inputCommandHandler.GetInputDirectionType(axes);
-
-          if (currentCommand != lastCommand)
-          {
-               lastCommand = currentCommand;
-               inputCommandBuffer.AddFirst(currentCommand);
-          }
+          UpdateInputNullCommand();
      }
 
      /// <summary>
@@ -88,62 +98,88 @@ public class PlayerInput : MonoBehaviour
      /// <param name="mouseStateMode">鼠标锁定模式</param>
      public void SetMouseState(CursorLockMode mouseStateMode) => Cursor.lockState = mouseStateMode;
 
-     #region 指令预输入系统
-     // 你也不希望你的指令接收很反人类吧
-     // TODO:会改成指令队列，预留给搓招玩法，具体要不要实现搓招，等后面
      /// <summary>
-     /// 预输入系统
+     /// <para>更新输入控制器空指令。</para>
+     /// <para>Update Input Controller Null Command.</para>
      /// </summary>
-     /// <param name="inputBufferBool"> 对应输入的回调函数 </param>
-     /// <param name="inputBufferTime"> bool函数持续时间 </param>
-     public void SetInputBuffer(Callback inputBufferBool, float inputBufferTime)
+     /// </param>
+     private void UpdateInputNullCommand()
      {
-          if(inputBufferCoroutine != null)             // 若当前协程不为空
-               StopCoroutine(inputBufferCoroutine);         // 停止协程
-          inputBufferCoroutine = StartCoroutine(InputBufferCoroutine(inputBufferBool, inputBufferTime));
+          if (inputCommandBuffer.PeekFirst != null)  // 检查输入命令缓冲区中的第一个元素是否为空。
+                                                       // Check if the first element in the input command buffer is null.
+          {
+               currentNullCommandTime -= Time.deltaTime;    // 如果不为空，则当前空指令时间开始倒计时。
+                                                            // If it's not null, then start counting down the current null command time.
+
+               if (currentNullCommandTime <= 0)             // 如果当前的空命令倒计时小于等于0
+                                                            // If the countdown for the current null command is less than or equal to 0.
+               {
+                    inputCommandBuffer.AddFirst(null);           // 添加一个空指令到缓冲区
+                                                                 // Add a null command to the buffer.
+                    currentNullCommandTime = nullCommandTime;    // 重置倒计时
+                                                                 // Reset the countdown.
+               }
+          }
      }
 
      /// <summary>
-     /// 预输入系统协程
+     /// <para>当摇杆操作被执行时调用的方法。</para>
+     /// <para>Method called when a joystick operation is performed.</para>
      /// </summary>
-     /// <param name="inputBufferBool"> 对应输入的回调函数 </param>
-     /// <param name="inputBufferTime"> bool函数持续时间 </param>
-     /// <returns></returns>
-     IEnumerator InputBufferCoroutine(Callback inputBufferBool , float inputBufferTime)
+     private void OnAxesPerformed(InputAction.CallbackContext context)
      {
-          inputBufferBool.Invoke(true);
-          yield return new WaitForSeconds(inputBufferTime);
-          inputBufferBool.Invoke(false);
+          Vector2 inputVector = context.ReadValue<Vector2>();                             // 从输入操作数据中读取二维向量输入值
+          string currentCommand = inputCommandHandler.GetInputDirectionType(inputVector); // 使用输入向量获取当前的指令类型
+          inputCommandBuffer.AddFirst(currentCommand);                                    // 将当前指令添加到命令缓冲区的开头
+          currentNullCommandTime = nullCommandTime;                                       // 重置空指令倒计时
      }
 
      /// <summary>
-     /// 回调函数
+     /// <para>当行动按钮被执行时调用的方法。</para>
+     /// <para>Method called when the action button is executed.</para>
      /// </summary>
-     /// <param name="inputBufferBool"> 只接受bool函数 </param>
-     /// <remarks> 回调给输入的bool函数 </remarks>
-     public delegate void Callback(bool inputBufferBool);
+     private void OnActionstarted(InputAction.CallbackContext context)
+     {
+          string actionName = context.action.name;                                        // 获取行动名字
+          inputCommandBuffer.AddFirst(actionName);                                        // 添加到队列
+          currentNullCommandTime = nullCommandTime;                                       // 重置空指令倒计时
+     }
 
-     /// <summary>
-     /// Jump 回调函数的方法
-     /// </summary>
-     /// <param name="inputBufferBool"> 输入回调出去的值 </param>
-     /// <remarks> 回调给 hasJumpInputBuffer </remarks>
-     public void CallbackJumpInputBuffer(bool inputBufferBool) => hasJumpInputBuffer = inputBufferBool;
+     #region 缓冲指令
 
-     /// <summary>
-     /// Attack 回调函数方法
-     /// </summary>
-     /// <param name="inputBufferBool"> 输入回调出去的值 </param>
-     /// <remarks> 回调给 hasAttackInputBuffer </remarks>
-     public void CallbackAttackInputBuffer(bool inputBufferBool) => hasAttackInputBuffer = inputBufferBool;
+     public bool hasAttackInputBuffer   // 攻击
+     {
+          get
+          {
+               string firstCommand = inputCommandBuffer.PeekFirst;
+               return firstCommand == ActionType.Attack.ToString();
+          }
+     }
+
+     public bool hasJumpInputBuffer     // 跳跃
+     {
+          get
+          {
+               string firstCommand = inputCommandBuffer.PeekFirst;
+               return firstCommand == ActionType.Jump.ToString();
+          }
+     }
+
+     public bool hasSkillInputBuffer    // 跳跃
+     {
+          get
+          {
+               string firstCommand = inputCommandBuffer.PeekFirst;
+               return firstCommand == ActionType.Skill.ToString();
+          }
+     }
 
      #endregion
 
-
 #if UNITY_EDITOR
-     void OnGUI()
+     private void OnGUI()
      {
-          GUI.skin.label.fontSize = 80;
+          GUI.skin.label.fontSize = 50;
           // 遍历队列中的元素，并使用GUILayout.Label()方法绘制出元素名称
           foreach (object item in inputCommandBuffer)
           {

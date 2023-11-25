@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "104f32d7-b20b-42c1-91c1-489c91b12189",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "MenuToggle",
                     "type": "Button",
                     "id": "7457b736-6298-4ead-8ead-c8aba10dc418",
@@ -278,6 +287,28 @@
                     "processors": "",
                     "groups": "Keybord",
                     "action": "MapToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2fcc171-a7c6-49ad-b86a-9a928b7d849d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4bb6124-aba0-4896-9ff3-52db749e41b9",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keybord",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

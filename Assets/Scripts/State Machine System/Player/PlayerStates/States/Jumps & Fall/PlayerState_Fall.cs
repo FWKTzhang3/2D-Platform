@@ -19,8 +19,6 @@ public class PlayerState_Fall : PlayerState
           {
                if (player.canAirJump)                                                                    // 如果可以进行空中跳跃
                     stateMachine.SwitchState(typeof(PlayerState_AirJump));                                    // 切换到空中跳跃状态
-               else                                                                                      // 反之             
-                    input.SetInputBuffer(input.CallbackJumpInputBuffer, input.hasJumpInputBufferTime);        // 启动跳跃输入缓冲
           }
           if (input.attack && player.canAirAttack)                                                       // 如果玩家按下攻击键且可以进行空中攻击
                stateMachine.SwitchState(typeof(PlayerState_AirAttack));                                      // 切换到空中攻击状态

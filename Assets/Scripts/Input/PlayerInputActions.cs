@@ -64,6 +64,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""104f32d7-b20b-42c1-91c1-489c91b12189"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""MenuToggle"",
                     ""type"": ""Button"",
                     ""id"": ""7457b736-6298-4ead-8ead-c8aba10dc418"",
@@ -300,6 +309,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keybord"",
                     ""action"": ""MapToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2fcc171-a7c6-49ad-b86a-9a928b7d849d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4bb6124-aba0-4896-9ff3-52db749e41b9"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -627,6 +658,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_Skill = m_Gameplay.FindAction("Skill", throwIfNotFound: true);
+        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_MenuToggle = m_Gameplay.FindAction("MenuToggle", throwIfNotFound: true);
         m_Gameplay_MapToggle = m_Gameplay.FindAction("MapToggle", throwIfNotFound: true);
         // UI
@@ -706,6 +738,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_Skill;
+    private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_MenuToggle;
     private readonly InputAction m_Gameplay_MapToggle;
     public struct GameplayActions
@@ -716,6 +749,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @Skill => m_Wrapper.m_Gameplay_Skill;
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @MenuToggle => m_Wrapper.m_Gameplay_MenuToggle;
         public InputAction @MapToggle => m_Wrapper.m_Gameplay_MapToggle;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -739,6 +773,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
             @MenuToggle.started += instance.OnMenuToggle;
             @MenuToggle.performed += instance.OnMenuToggle;
             @MenuToggle.canceled += instance.OnMenuToggle;
@@ -761,6 +798,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
             @MenuToggle.started -= instance.OnMenuToggle;
             @MenuToggle.performed -= instance.OnMenuToggle;
             @MenuToggle.canceled -= instance.OnMenuToggle;
@@ -926,6 +966,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnMenuToggle(InputAction.CallbackContext context);
         void OnMapToggle(InputAction.CallbackContext context);
     }

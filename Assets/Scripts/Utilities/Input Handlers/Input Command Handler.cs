@@ -17,7 +17,7 @@ public class InputCommandHandler
      /// <para>摇杆方向类型。</para>
      /// <para>The joystick direction type.</para>
      /// </returns>
-     public JoystickDirectionType GetInputDirectionType(Vector2 inputDirection)
+     public string GetInputDirectionType(Vector2 inputDirection)
      {
           // 向量取整
           int inputDirectionX = Mathf.RoundToInt(inputDirection.x);
@@ -27,23 +27,23 @@ public class InputCommandHandler
           switch (inputDirectionX, inputDirectionY) 
           {
                case (0, 1):
-                    return JoystickDirectionType.Up;
+                    return JoystickDirectionType.Up.ToString();
                case (0, -1):
-                    return JoystickDirectionType.Down;
+                    return JoystickDirectionType.Down.ToString();
                case (-1, 0):
-                    return JoystickDirectionType.Left;
+                    return JoystickDirectionType.Left.ToString();
                case (1, 0):
-                    return JoystickDirectionType.Right;
+                    return JoystickDirectionType.Right.ToString();
                case (-1, 1):
-                    return JoystickDirectionType.UpLeft;
+                    return JoystickDirectionType.UpLeft.ToString();
                case (1, 1):
-                    return JoystickDirectionType.UpRight;
+                    return JoystickDirectionType.UpRight.ToString();
                case (-1, -1):
-                    return JoystickDirectionType.DownLeft;
+                    return JoystickDirectionType.DownLeft.ToString();
                case (1, -1):
-                    return JoystickDirectionType.DownRight;
+                    return JoystickDirectionType.DownRight.ToString();
                default: 
-                    return JoystickDirectionType.None;
+                    return null;
           }
      }
 }

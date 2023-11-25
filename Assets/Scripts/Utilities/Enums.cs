@@ -1,4 +1,6 @@
+using System;
 using System.Numerics;
+using System.Runtime.Serialization;
 
 /// <summary>
 /// 芝士层级枚举
@@ -65,7 +67,7 @@ public enum AttackType
      Finisher        // 结束攻击
 }
 
-#region 控制器枚举
+#region 控制器行为枚举
 
 /// <summary>
 /// 摇杆方向
@@ -84,14 +86,14 @@ public enum JoystickDirectionType
 }
 
 /// <summary>
-/// 行为按键类型
+/// 行为类型
 /// </summary>
-public enum ActionButtonType
+public enum ActionType
 {
-     ButtonNorth,
-     ButtonSouth,
-     ButtonWest,
-     ButtonEast,
+     Jump,
+     Attack,
+     Skill,
+     Interact,
 }
 
 /// <summary>
@@ -122,6 +124,5 @@ public enum TriggerButtonType
      LeftTrigger,   // 左扳机
      RightTrigger,  // 右扳机
 }
-
 
 #endregion

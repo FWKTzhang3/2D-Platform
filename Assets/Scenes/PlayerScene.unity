@@ -834,13 +834,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed51b588f1a59274982d89976d1295e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasJumpInputBuffer: 0
-  hasJumpInputBufferTime: 0.5
-  hasAttackInputBuffer: 0
-  hasAttackInputBufferTime: 0.25
-  maxControllerBuffer: 10
-  nullCommandTime: 3
-  currentNullCommandTime: 0
+  maxControllerBuffer: 15
+  nullCommandTime: 0.25
 --- !u!114 &251767123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1360,7 +1355,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.40334272, y: -3.4325793, z: -20}
+  m_LocalPosition: {x: 0.0000005364418, y: -3.0000002, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2038,7 +2033,7 @@ Transform:
   m_GameObject: {fileID: 1280254137}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.40334272, y: -3.4325793, z: -20}
+  m_LocalPosition: {x: 0.0000005364418, y: -3.0000002, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2341,7 +2336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0.4033422, y: 0.567421, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 1, z: 0}
   m_LookaheadTime: 0.5
   m_LookaheadSmoothing: 20
   m_LookaheadIgnoreY: 0

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DataStructures
 {
@@ -35,8 +36,11 @@ namespace DataStructures
           }
 
           /// <summary>
-          /// <para>在队列头部添加元素。如果队列已满，则移除最旧的元素（尾部）。</para>
-          /// <para>Adds an element to the beginning of the deque. If the deque is full, the oldest element (tail) is removed.</para>
+          /// <para>在队列头部添加元素。如果队列已满，则移除尾部的元素。</para>
+          /// <para>
+          /// Adds an element to the beginning of the deque. 
+          /// If the deque is full, the oldest element (tail) is removed.
+          /// </para>
           /// </summary>
           /// <param name="item">
           /// <para>要添加到队列的元素。</para>
@@ -47,69 +51,118 @@ namespace DataStructures
                if (deque.Count >= capacity)  // 如果队列已满
                                              // If the deque is full
                {
-                    deque.RemoveLast();           // 移除最旧的元素（尾部）
-                                                  // Remove the oldest element (at the tail)
+                    deque.RemoveLast();           // 移除尾部的元素
+                                                  // Remove the last element
                }
                deque.AddFirst(item);         // 将新元素添加到队列头部
                                              // Add the new element to the beginning of the deque
           }
 
           /// <summary>
-          /// <para> 在特定位置插入元素 </para>
-          /// <para> Insert element at a specific position. </para>
+          /// <para>在队列尾部添加元素。如果队列已满，则移除头部的元素。</para>
+          /// <para>
+          /// Adds an item to the end of the queue.
+          /// If the queue is full, removes the item at the head before adding the new item.
+          /// </para>
           /// </summary>
-          /// <param name="index"> 
-          /// <para>插入位置（切记不要超过自定义的范围）</para>
-          /// <para>Insert position (be careful not to exceed the custom range)</para>
+          /// <param name="item">
+          /// <para>要添加到队列的元素。</para>
+          /// <para>The element to add to the deque.</para>
           /// </param>
-          /// <param name="list">
-          /// <para>插入元素</para>
-          /// <para>Insert element</para>
-          /// </param>
-          public void AddAt(int index, List<T> list)
+          public void AddLast(T item)
           {
-               // 检查位置是否大于限制范围（超了就不插）
-               if(index > deque.Count)
+               if (deque.Count >= capacity)  // 如果队列已满
+                                             // If the deque is full
                {
-                    #if UNITY_EDITOR 
-                    Debug.WriteLine("警告：当前插入位置超出限制");
-                    Debug.WriteLine("Warning：Index is out of range");
-                    #endif
-
-                    return;
+                    deque.RemoveFirst();          // 移除头部的元素
+                                                  // Remove the first element
                }
-               //插入元素
-               list.Insert(index, default);
+               deque.AddLast(item);          // 将新元素添加到队列尾部
+                                             // Add the new element to the end of the deque
           }
 
-          // 返回链表中元素的数量
+          /// <summary>
+          /// <para> 返回链表中元素的数量。 </para>
+          /// <para> Return the number of elements in the linked list. </para>
+          /// </summary>
           public int Count => deque.Count;
 
-          // 返回队列头部的元素，但不移除它。
-          // Returns the element at the beginning of the deque without removing it.
-          public T PeekFirst()
+          /// <summary>
+          /// <para>读取队列尾部的元素。</para>
+          /// <para>Retrieve the element at the front of the queue.</para>
+          /// </summary>
+          public T PeekFirst
           {
-               return deque.First.Value;  
+               get
+               {
+                    if (Count > 0)                      // 如果当前队列大于 0
+                         return deque.First.Value;          // 返回首位元素
+                    else                               // 反之
+                         return default;                    // 返回对应数据的默认数值
+               }
           }
 
-          // 返回队列尾部的元素，但不移除它。
-          // Returns the element at the end of the deque without removing it.
-          public T PeekLast()
+          /// <summary>
+          /// <para>读取队列尾部的元素。</para>
+          /// <para>Retrieve the element at the end of the queue.</para>
+          /// </summary>
+          public T PeekLast
           {
-               return deque.Last.Value;
+               get
+               {
+                    if (Count > 0)                      // 如果当前队列大于 0
+                         return deque.Last.Value;           // 返回尾部元素
+                    else                               // 反之
+                         return default;                    // 返回对应数据的默认数值
+               }
+          }
+
+          /// <summary>
+          /// <para>读取特定位置元素。</para>
+          /// <para>Retrieve element at specific position.</para>
+          /// </summary>
+          /// <param name="index">
+          /// <para>输入要读取的位置。</para>
+          /// <para>Enter the position to read.</para>
+          /// </param>
+          /// <returns>
+          /// <para>返回该位置元素。</para>
+          /// <para>Return the element at that position.</para>
+          /// </returns>
+          public T PeekAt(int index)
+          {
+               if (index > Count)       // 如果特定位置超过队列容量
+               {
+                    #if UNITY_EDITOR
+                    Debug.WriteLine("警告：目标位置超出限制。");
+                    Debug.WriteLine("Warning: Target position exceeds the limit.");
+                    #endif
+                    return default;          // 返回对应数据默认值
+               }
+
+               var item = deque.ElementAt(index); // 缓存检索到的元素
+               if (item == null)                  // 如果为空
+                    return default;                    // 返回对应数据默认值
+               else                               // 反之
+                    return item;                       // 返回对应数据
           }
 
           /// <summary>
           /// <para>清空所有元素</para>
           /// <para>Clear all elements</para>
           /// </summary>
-          public void ClearAll()
+          public T ClearAll
           {
-               deque.Clear();
+               set
+               {
+                    deque.Clear();
+               }
           }
 
-          // 实现IEnumerable<T>接口
-          // Implement the IEnumerable<T> interface.
+          /// <summary>
+          /// <para> 实现IEnumerable<T>接口 </para>
+          /// <para> Implement the IEnumerable<T> interface. </para>
+          /// </summary>
           public IEnumerator<T> GetEnumerator()
           {
                return deque.GetEnumerator();
