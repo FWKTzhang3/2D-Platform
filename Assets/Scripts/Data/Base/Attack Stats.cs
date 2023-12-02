@@ -17,5 +17,6 @@ public class AttackStats : ScriptableObject
 
      [Header("顿帧相关")]
      [Tooltip("顿帧持续时间")] public float[] hitStopTime;
-     [Tooltip("顿帧恢复速度")]public float[] hitStopRecoveSpeed;
+     [Tooltip("顿帧恢复速度")] public float[] hitStopRecoveSpeed;
 }
+

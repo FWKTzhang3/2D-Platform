@@ -1,7 +1,3 @@
-using System;
-using System.Numerics;
-using System.Runtime.Serialization;
-
 /// <summary>
 /// 芝士层级枚举
 /// </summary>
@@ -46,25 +42,6 @@ public enum CharacterType
      Player,
      Enemy,
      Boss,
-}
-
-/// <summary>
-/// 芝士攻击类型枚举
-/// </summary>
-/// <remarks> 先这样留着吧，我也不知道有什么用 </remarks>
-public enum AttackType
-{
-     Normal,         // 普通攻击
-     Skill,          // 技能攻击
-     Combo,          // 连击攻击
-     Critical,       // 致命攻击
-     Counter,        // 反击攻击
-     Aerial,         // 空中攻击
-     Grab,           // 抓取攻击
-     Projectile,     // 抛射物攻击
-     AoE,            // 范围攻击
-     Charge,         // 冲刺攻击
-     Finisher        // 结束攻击
 }
 
 #region 控制器行为枚举

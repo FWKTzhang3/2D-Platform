@@ -47,7 +47,7 @@ public class PlayerState : ScriptableObject, IState    // 继承ScriptableObject（
      /// <remarks> 需要按顺序传入，动画管理器、玩家输入类、玩家控制器、玩家常量、玩家检测器、玩家状态机 </remarks>
      public void Intialize(Animator animator, PlayerInput input, PlayerController player, PlayerConstants constants, GroundDetector groundDetector, PlayerStateMachine stateMachine)
      {
-          this.animator = animator;               // 将传入的动画管理器赋值给 animator 属性
+          this.animator = animator;               // 将传入的动画管理器赋值给 _animator 属性
           this.input = input;                     // 将传入的玩家输入类赋值给 playerInput 属性
           this.player = player;                   // 将传入的玩家控制器赋值给 player 属性
           this.constants = constants;             // 将传入的玩家常量赋值给 constants 属性
@@ -57,7 +57,7 @@ public class PlayerState : ScriptableObject, IState    // 继承ScriptableObject（
 
      public virtual void Enter()
      {
-          animator.CrossFade(stateHash, transitionDuration);     // 使用 animator.CrossFade 方法将动画过渡到指定的状态（animationHash）
+          animator.CrossFade(stateHash, transitionDuration);     // 使用 _animator.CrossFade 方法将动画过渡到指定的状态（animationHash）
           animator.speed = animationSpeed;
           stateStartTime = Time.time;                            // 将 stateStartTime 设置为当前时间（Time.time）
      }

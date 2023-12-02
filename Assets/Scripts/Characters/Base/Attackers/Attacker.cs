@@ -17,7 +17,6 @@ public class Attacker : MonoBehaviour
      public float hitStopTime;
      public float hitStopRecoveSpeed;
 
-
      private void OnTriggerStay2D(Collider2D other)
      {
           if (other.tag == TagType.HitBox.ToString())                                     // 如果目标物体的标签是 HitBox

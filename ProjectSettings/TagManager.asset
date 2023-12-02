@@ -8,11 +8,11 @@ TagManager:
   - HurtBox
   - Body
   - Animation
-  - Detectors
   - CameraBounds
   - CameraShake
   - BulletRange
-  - Bullet
+  - Clothe
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -61,7 +61,4 @@ TagManager:
     locked: 0
   - name: OneWayPlatform
     uniqueID: 665163897
-    locked: 0
-  - name: New Layer 5
-    uniqueID: 4132774565
     locked: 0

@@ -26,7 +26,7 @@ public class EnemyState : ScriptableObject, IState
 
      public void Intialize(Animator animator, EnemyController enemy, EnemyConstants constants, GroundDetector groundDetector ,ObjectDetector objectDetector, EnemyStateMachine stateMachine)
      {
-          this.animator = animator;               // 将传入的动画管理器赋值给 animator 属性
+          this.animator = animator;               // 将传入的动画管理器赋值给 _animator 属性
           this.enemy = enemy;                     // 将敌人控制类赋值给 enemy 属性
           this.constants = constants;
           this.groundDetector = groundDetector;

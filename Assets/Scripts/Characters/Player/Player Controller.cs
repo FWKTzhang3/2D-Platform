@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
      {
           if (input.move)     // 如果玩家按下了移动按钮 
           {
-               int faceDir = (input.axesX > 0) ? 1 : -1;         // 数值精确化（只有1和-1）
+               int faceDir = Mathf.RoundToInt(input.axesX);      // 方向整数化
                transform.localScale = new Vector2(faceDir, 1f);  // 将玩家的转换缩放比例设置为 playerInput.axisX 控制的方向（1 为正方向，-1 为反方向）
           }
 
