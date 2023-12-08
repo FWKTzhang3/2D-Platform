@@ -44,6 +44,12 @@ public enum CharacterType
      Boss,
 }
 
+public enum CharacterStateType
+{
+     Hurt,
+     Death,
+}
+
 #region 控制器行为枚举
 
 /// <summary>
@@ -68,8 +74,9 @@ public enum JoystickDirectionType
 public enum ActionType
 {
      Jump,
-     Attack,
-     Skill,
+     Normal_Attack,
+     Special_Attack,
+     Skill_Attack,
      Interact,
 }
 

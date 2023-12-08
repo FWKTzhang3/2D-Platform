@@ -84,15 +84,6 @@ public class EnemyController : MonoBehaviour
      }
 
      /// <summary>
-     /// 启动震动
-     /// </summary>
-     /// <param name="victim"> 接收 Victim 的数据 </param>
-     public void OnShake(Victim victim)
-     {
-          animationManager.AnimationShake(victim.hitDirection, victim.shakeStrength);
-     }
-
-     /// <summary>
      /// 获取受击数据
      /// </summary>
      /// <param name="attacker"></param>
@@ -110,7 +101,7 @@ public class EnemyController : MonoBehaviour
           knockbackForceX = attacker.knockbackForceX;
           knockbackForceY = attacker.knockbackForceY;
           */
-          knockbackHardTime = attacker.knockbackHardTime;
+          //knockbackHardTime = attacker.hardTime;
      }
 
      /// <summary>

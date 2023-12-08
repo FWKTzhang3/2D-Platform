@@ -6,8 +6,8 @@ using UnityEngine;
 public class FallComponet : MonoBehaviour
 {
      private Transform _transform;           // 变换器组件
-     private Rigidbody2D _rigidbody2D;       // 刚体组件
-     private DetectionSystem _detection;     // 检测器系统
+     private ControllSystem _controll;       // 控制系统
+     private DetectionSystem _detection;     // 检测系统
 
      [SerializeField, Tooltip("下落速度动画曲线")] private AnimationCurve _fallSpeedCurve;
 
@@ -18,9 +18,9 @@ public class FallComponet : MonoBehaviour
 
      private void Awake()
      {
-          _transform = transform.parent;
-          _rigidbody2D = GetComponentInParent<Rigidbody2D>();
-          _detection = GetComponentInParent<DetectionSystem>();
+          _transform = transform.parent;                         // 获取父级物体的变换器组件
+          _controll = GetComponentInParent<ControllSystem>();    // 获取父级物体的控制系统
+          _detection = GetComponentInParent<DetectionSystem>();  // 获取父级物体的控制器系统
      }
 
      private void Start()
@@ -30,7 +30,7 @@ public class FallComponet : MonoBehaviour
 
      private void Update()
      {
-          if (getVelocityY < 0 && _detection.isAir)    // 如果当前力度小于 0 且 在空中
+          if (_controll.velocityY < 0 && _detection.isAir)    // 如果当前力度小于 0 且 在空中
           {
                // 用MoveTowards将当前下落时间线性插值最大时间
                _currentfallCurveTime = Mathf.MoveTowards(_currentfallCurveTime, _maxfallCurveTime, Time.deltaTime);
@@ -45,22 +45,7 @@ public class FallComponet : MonoBehaviour
 
      private void FixedUpdate()
      {
-          if (getVelocityY < 0 && _detection.isAir)    // 如果当前下路速度小于 0
-               SetVelocityY(_currentFallSpeed);             //让玩家下落
+          if (_controll.velocityY < 0 && _detection.isAir)  // 如果当前Y轴速度小于 0
+               _controll.velocityY = _currentFallSpeed;        //让玩家下落
      }
-
-     /// <summary>
-     /// 设置刚体在垂直方向上的速度
-     /// </summary>
-     /// <param name="velocityX">水平垂直上的速度值</param>
-     private void SetVelocityY(float velocityX)
-     {
-          _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, velocityX); // 设置刚体在垂直方向上的速度
-     }
-
-     /// <summary>
-     /// 获取刚体当前Y轴力度
-     /// </summary>
-     private float getVelocityY => _rigidbody2D.velocity.y;
-
 }

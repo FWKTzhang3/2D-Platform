@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158ac28b5d0074e449d7ffae5d6885f8, type: 3}
+  m_Name: AttackDatas
+  m_EditorClassIdentifier: 
+  attack_Type_Data:
+  - attackDataType: 0
+    attackDetail:
+    - hurtBoxOffset: {x: 0.7, y: 0.95}
+      hurtBoxSize: {x: 2, y: 1}
+      damage: 5
+      knockbackForce: {x: 5, y: 2.5}
+      hitstunTime: 1
+      hitStopTime: 0.01
+      hitStopRecoveSpeed: 15
+    - hurtBoxOffset: {x: 1, y: 1.45}
+      hurtBoxSize: {x: 1.5, y: 2.4}
+      damage: 10
+      knockbackForce: {x: 2.5, y: 5}
+      hitstunTime: 1
+      hitStopTime: 0.02
+      hitStopRecoveSpeed: 10
+    - hurtBoxOffset: {x: 1, y: 1}
+      hurtBoxSize: {x: 1.4, y: 2}
+      damage: 15
+      knockbackForce: {x: 5, y: -5}
+      hitstunTime: 1
+      hitStopTime: 0.03
+      hitStopRecoveSpeed: 5
+  - attackDataType: 1
+    attackDetail:
+    - hurtBoxOffset: {x: 0.85, y: 1.1}
+      hurtBoxSize: {x: 1.5, y: 1}
+      damage: 5
+      knockbackForce: {x: 5, y: 0}
+      hitstunTime: 1
+      hitStopTime: 0.01
+      hitStopRecoveSpeed: 15
+    - hurtBoxOffset: {x: 1, y: 1.45}
+      hurtBoxSize: {x: 1.5, y: 2.4}
+      damage: 10
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+    - hurtBoxOffset: {x: 1, y: 1}
+      hurtBoxSize: {x: 1.4, y: 2}
+      damage: 15
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+  - attackDataType: 2
+    attackDetail:
+    - hurtBoxOffset: {x: 0.85, y: 1.1}
+      hurtBoxSize: {x: 1.5, y: 1}
+      damage: 5
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+    - hurtBoxOffset: {x: 1, y: 1.45}
+      hurtBoxSize: {x: 1.5, y: 2.4}
+      damage: 10
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+    - hurtBoxOffset: {x: 1, y: 1}
+      hurtBoxSize: {x: 1.4, y: 2}
+      damage: 15
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+  - attackDataType: 3
+    attackDetail:
+    - hurtBoxOffset: {x: 0.85, y: 1.1}
+      hurtBoxSize: {x: 1.5, y: 1}
+      damage: 5
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+    - hurtBoxOffset: {x: 1, y: 1.45}
+      hurtBoxSize: {x: 1.5, y: 2.4}
+      damage: 10
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1
+    - hurtBoxOffset: {x: 1, y: 1}
+      hurtBoxSize: {x: 1.4, y: 2}
+      damage: 15
+      knockbackForce: {x: 0, y: 0}
+      hitstunTime: 0
+      hitStopTime: 0.1
+      hitStopRecoveSpeed: 1

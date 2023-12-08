@@ -6,8 +6,22 @@ using UnityEngine;
 /// </summary>
 public class WeaponFrames : MonoBehaviour
 {
+     /// <summary>
+     /// 启动攻击判定
+     /// </summary>
      public static event Action EnableHurtBox;
+     /// <summary>
+     /// 关闭攻击判定
+     /// </summary>
      public static event Action DisableHurtBox;
+     /// <summary>
+     /// 输出普通攻击事件
+     /// </summary>
+     public static event Action<int> NormalAttackEvent;
+     /// <summary>
+     /// 输出远程攻击事件
+     /// </summary>
+     public static event Action SpecialAttackEvent;
 
      /// <summary>
      /// 输出碰撞器状态
@@ -24,6 +38,23 @@ public class WeaponFrames : MonoBehaviour
                     DisableHurtBox?.Invoke();          // 则输出关闭事件
                     break;                             // 打断
           }
+     }
+
+     /// <summary>
+     /// 启动普通攻击
+     /// </summary>
+     /// <param name="count"> 攻击序号 </param>
+     private void OnNormalAttack(int count)
+     {
+          NormalAttackEvent?.Invoke(count);
+     }
+
+     /// <summary>
+     /// 启动远程攻击
+     /// </summary>
+     private void OnSpecialAttack()
+     {
+          SpecialAttackEvent?.Invoke();
      }
 }
 

@@ -9,14 +9,30 @@ public class InputSystem : MonoBehaviour
      private InputCommandHandler _inputCommandHandler;  // 指令转换
      private LimitedDeque<string> _inputCommandBuffer;  // 指令队列    
 
-     public event Action<Vector2> OnJoyStickEvent;     // 摇杆事件
+     #region 控制器事件
 
-     public event Action OnJumpEvent;                  // 跳跃事件
-     public event Action StopJumpEvent;                // 停止跳跃事件
+     public event Action<Vector2> JoystickEvent;            // 摇杆事件
 
-     public event Action OnAttackEvent;                // 攻击事件
-     public event Action OnSkillEvent;                  // 技能事件
-     public event Action OnInteractEvent;              // 交互事件
+     public event Action<InputAction> ActionStartedEvent;   // 行动按钮按下事件
+     public event Action<InputAction> ActionCanceledEvent;  // 行动按钮抬起事件
+
+     #endregion
+
+     #region 摇杆向量
+
+     private Vector2 _joystickVector => _playerInputActions.Gameplay.Axes.ReadValue<Vector2>();
+     public float joystickVectorX => _joystickVector.x;
+     public float joystickVectorY => _joystickVector.y;
+
+     #endregion
+
+     #region 当前帧指令
+
+     public bool normalAttack => _playerInputActions.Gameplay.Normal_Attack.WasPerformedThisFrame();     // 普通攻击
+     public bool specialAttack => _playerInputActions.Gameplay.Special_Attack.WasPerformedThisFrame();   // 远程攻击
+     public bool skillAttack => _playerInputActions.Gameplay.Skill_Attack.WasPerformedThisFrame();       // 技能攻击
+
+     #endregion
 
      [Header("指令缓冲区设置")]
      [SerializeField, Tooltip("缓冲区容量")] private int _maxControllerBuffer;
@@ -35,18 +51,18 @@ public class InputSystem : MonoBehaviour
           EnableGameplayInputs();  // 启动控制器
 
           // 注册摇杆事件
-          _playerInputActions.Gameplay.Axes.performed += OnAxesPerformed;
-          _playerInputActions.Gameplay.Axes.canceled += OnAxesPerformed;
+          _playerInputActions.Gameplay.Axes.performed += OnAxesActions;
+          _playerInputActions.Gameplay.Axes.canceled += OnAxesActions;
 
           // 注册按钮事件（按下）
-          _playerInputActions.Gameplay.Attack.started += OnActionStarted;
           _playerInputActions.Gameplay.Jump.started += OnActionStarted;
-          _playerInputActions.Gameplay.Skill.started += OnActionStarted;
+          _playerInputActions.Gameplay.Normal_Attack.started += OnActionStarted;
+          _playerInputActions.Gameplay.Special_Attack.started += OnActionStarted;
+          _playerInputActions.Gameplay.Skill_Attack.started += OnActionStarted;
           _playerInputActions.Gameplay.Interact.started += OnActionStarted;
 
           // 注册按钮事件（抬起）
           _playerInputActions.Gameplay.Jump.canceled += OnActionCanceled;
-          _playerInputActions.Gameplay.Attack.canceled += OnActionCanceled;
      }
 
      private void OnDisable()
@@ -54,13 +70,14 @@ public class InputSystem : MonoBehaviour
           DisableGameplayInputs(); // 关闭控制器
 
           // 注销摇杆事件
-          _playerInputActions.Gameplay.Axes.performed -= OnAxesPerformed;
-          _playerInputActions.Gameplay.Axes.canceled -= OnAxesPerformed;
+          _playerInputActions.Gameplay.Axes.performed -= OnAxesActions;
+          _playerInputActions.Gameplay.Axes.canceled -= OnAxesActions;
 
           // 注销按钮事件（按下）
-          _playerInputActions.Gameplay.Attack.started -= OnActionStarted;
           _playerInputActions.Gameplay.Jump.started -= OnActionStarted;
-          _playerInputActions.Gameplay.Skill.started -= OnActionStarted;
+          _playerInputActions.Gameplay.Normal_Attack.started -= OnActionStarted;
+          _playerInputActions.Gameplay.Special_Attack.started -= OnActionStarted;
+          _playerInputActions.Gameplay.Skill_Attack.started -= OnActionStarted;
           _playerInputActions.Gameplay.Interact.started -= OnActionStarted;
 
           // 注销按钮事件（抬起）
@@ -98,16 +115,18 @@ public class InputSystem : MonoBehaviour
      /// 摇杆事件方法
      /// </summary>
      /// <param name="context"> 接收摇杆所有回调数据 </param>
-     private void OnAxesPerformed(InputAction.CallbackContext context)
+     private void OnAxesActions(InputAction.CallbackContext context)
      {
           Vector2 moveInput = context.ReadValue<Vector2>();      // 获取摇杆向量
-          OnJoyStickEvent?.Invoke(moveInput);                    // 传递向量
+          JoystickEvent?.Invoke(moveInput);                      // 传递摇杆事件
+          /*
           if (context.phase == InputActionPhase.Performed)
           {
                string currentCommand = _inputCommandHandler.GetInputDirectionType(moveInput);  // 使用输入向量获取当前的指令类型
                _inputCommandBuffer.AddFirst(currentCommand);                                   // 将当前指令添加到命令缓冲区的开头
                _currentNullCommandTime = _nullCommandTime;                                     // 重置空指令倒计时
           }
+          */
      }
 
      /// <summary>
@@ -117,25 +136,9 @@ public class InputSystem : MonoBehaviour
      private void OnActionStarted(InputAction.CallbackContext context)
      {
           string currentActionName = context.action.name;   // 缓存当前事件名称
-          _inputCommandBuffer.AddFirst(currentActionName);   // 加入指令缓冲区
+          _inputCommandBuffer?.AddFirst(currentActionName); // 加入指令缓冲区
           _currentNullCommandTime = _nullCommandTime;       // 重置空指令倒计时
-          switch (currentActionName)       // 检测行动名称
-          {
-               case "Jump":
-                    OnJumpEvent?.Invoke();
-                    break;
-               case "Attack":
-                    OnAttackEvent?.Invoke();
-                    break;
-               case "Skill":
-                    OnSkillEvent?.Invoke();
-                    break;
-               case "Interact":
-                    OnInteractEvent?.Invoke();
-                    break;
-               default:
-                    break;
-          }
+          ActionStartedEvent?.Invoke(context.action);       // 传递当前行动指令
      }
 
      /// <summary>
@@ -144,15 +147,7 @@ public class InputSystem : MonoBehaviour
      /// <param name="context"> 接收行动所有回调数据</param>
      private void OnActionCanceled(InputAction.CallbackContext context)
      {
-          string currentActionName = context.action.name;   // 获取当前事件名称
-          switch (currentActionName)       // 检测行动名称
-          {
-               case "Jump":
-                    StopJumpEvent?.Invoke();
-                    break;
-               default:
-                    break;
-          }
+          ActionCanceledEvent?.Invoke(context.action); // 传递当前行动指令
      }
 
      #endregion
@@ -173,32 +168,45 @@ public class InputSystem : MonoBehaviour
           }
      }
 
-     public bool hasAttackInputBuffer   // 攻击
-     {
-          get
-          {
-               string firstCommand = _inputCommandBuffer.PeekFirst;
-               return firstCommand == ActionType.Attack.ToString();
-          }
-     }
+     #region 缓冲指令
 
-     public bool hasJumpInputBuffer     // 跳跃
+     public bool jumpBuffer             // 跳跃
      {
           get
           {
-               string firstCommand = _inputCommandBuffer.PeekFirst;
+               string firstCommand = _inputCommandBuffer?.PeekFirst;
                return firstCommand == ActionType.Jump.ToString();
           }
      }
 
-     public bool hasSkillInputBuffer    // 跳跃
+     public bool normalAttackBuffer     // 普通攻击
      {
           get
           {
-               string firstCommand = _inputCommandBuffer.PeekFirst;
-               return firstCommand == ActionType.Skill.ToString();
+               string firstCommand = _inputCommandBuffer?.PeekFirst;
+               return firstCommand == ActionType.Normal_Attack.ToString();
           }
      }
+
+     public bool specialAttackBuffer    // 远程攻击
+     {
+          get
+          {
+               string firstCommand = _inputCommandBuffer?.PeekFirst;
+               return firstCommand == ActionType.Special_Attack.ToString();
+          }
+     }
+
+     public bool skillAttackBuffer      // 技能攻击
+     {
+          get
+          {
+               string firstCommand = _inputCommandBuffer?.PeekFirst;
+               return firstCommand == ActionType.Skill_Attack.ToString();
+          }
+     }
+
+     #endregion
 
 #if UNITY_EDITOR
      private void OnGUI()

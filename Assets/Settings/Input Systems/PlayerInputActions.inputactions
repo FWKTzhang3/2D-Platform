@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "Normal_Attack",
                     "type": "Button",
                     "id": "f218fdd4-f935-4189-9613-88349be09b2e",
                     "expectedControlType": "Button",
@@ -33,9 +33,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill",
+                    "name": "Special_Attack",
                     "type": "Button",
                     "id": "940a71a9-8903-4214-918f-aa3b440701bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill_Attack",
+                    "type": "Button",
+                    "id": "e18ac273-d47d-46ad-b027-352cca5c0b41",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -51,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuToggle",
+                    "name": "Menu_Toggle",
                     "type": "Button",
                     "id": "7457b736-6298-4ead-8ead-c8aba10dc418",
                     "expectedControlType": "Button",
@@ -60,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MapToggle",
+                    "name": "Map_Toggle",
                     "type": "Button",
                     "id": "c8b9134f-d180-4740-abe4-5234876e5e56",
                     "expectedControlType": "Button",
@@ -73,7 +82,7 @@
                 {
                     "name": "Left Stick",
                     "id": "0d8da04c-1a6d-4815-8c0c-1497303b0b95",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -128,7 +137,7 @@
                 {
                     "name": "WASD",
                     "id": "ea9d4d35-d60c-4e3b-bf13-251ab67acc6f",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -209,7 +218,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keybord",
-                    "action": "Attack",
+                    "action": "Normal_Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -220,7 +229,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Attack",
+                    "action": "Normal_Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -231,7 +240,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keybord",
-                    "action": "Skill",
+                    "action": "Special_Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -242,7 +251,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Skill",
+                    "action": "Special_Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -253,7 +262,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "MenuToggle",
+                    "action": "Menu_Toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -264,7 +273,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keybord",
-                    "action": "MenuToggle",
+                    "action": "Menu_Toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -275,7 +284,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "MapToggle",
+                    "action": "Map_Toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -286,7 +295,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keybord",
-                    "action": "MapToggle",
+                    "action": "Map_Toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -309,6 +318,28 @@
                     "processors": "",
                     "groups": "Keybord",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1bf0cda-0b1b-4eec-a773-7275526247c7",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Skill_Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f3d005a-931b-49ee-83a2-6ffa9e1477da",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keybord",
+                    "action": "Skill_Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
